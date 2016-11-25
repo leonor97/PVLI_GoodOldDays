@@ -54,7 +54,7 @@ var PreloaderScene = {
     
       //TODO 2.2b function loadComplete()
   LoadComplete: function() {
-    text.setText("Load Complete");
+    text.setText("Load Complete");  
     loadStart();
     //this.ready = true;
   }
@@ -76,8 +76,12 @@ var wfconfig = {
     google: {
         families: ['Sniglet']
     }
- 
+
 };
+ window.onload = function(){
+      WebFont.load(wfconfig);
+      
+    };
  
 //TODO 3.2 Cargar Google font cuando la página esté cargada con wfconfig.
 //TODO 3.3 La creación del juego y la asignación de los states se hará en el método init().
