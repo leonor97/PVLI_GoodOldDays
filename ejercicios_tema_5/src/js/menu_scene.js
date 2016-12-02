@@ -1,6 +1,6 @@
 var MenuScene = {
     create: function () {
-        
+        this.game.world.setBounds(0,0,800,600);
         var logo = this.game.add.sprite(this.game.world.centerX, 
                                         this.game.world.centerY, 
                                         'logo');

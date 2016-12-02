@@ -3,9 +3,9 @@
 //TODO 1.1 Require de las escenas, play_scene, gameover_scene y menu_scene.
 
 //  The Google WebFont Loader will look for this object, so create it before loading the script.
-var GameOver = require (./gameover_scene);
-var PlayScene = require (./play_scene);
-var MenuScene = require (./menu_scene);
+var gameOver = require ('./gameover_scene.js');
+var playScene = require ('./play_scene.js');
+var menuScene = require ('./menu_scene.js');
 
 
 
@@ -20,6 +20,7 @@ var BootScene = {
   create: function () {
     //this.game.state.start('preloader');
       this.game.state.start('menu');
+   
   }
 };
 
@@ -40,24 +41,23 @@ var PreloaderScene = {
       //como descriptor de la animación.
       this.game.load.tilemap('tilemap','images/map.json', null, Phaser.Tilemap.TILED_JSON);
       this.game.load.image('tiles', 'images/simples_pimples.png');
-      this.game.load.atlas('atlasJSONHash', 'images/run_spritesheet.png', 'images/rush_spritesheet.json',Phaser.Loader.TEXTURE_ATLAS_JSON_HASH);
+      this.game.load.atlas('rush', 'images/rush_spritesheet.png', 'images/rush_spritesheet.json' ,Phaser.Loader.TEXTURE_ATLAS_JSON_HASH);
       //TODO 2.2a Escuchar el evento onLoadComplete con el mismo método loadComplete que el state 'play'
-      game.load.onLoadComplete.add(loadComplete, this);
+      this.load.onLoadComplete.add(this.loadComplete, this);
 
     
   },
 
   loadStart: function () {
-    this.game.state.start('play');
     console.log("Game Assets Loading ...");
   },
     
       //TODO 2.2b function loadComplete()
-  LoadComplete: function() {
-    text.setText("Load Complete");  
-    loadStart();
+  loadComplete: function() {
+  //  text.setText("Load Complete");  
+    this.game.state.start('play')
     //this.ready = true;
-  }
+  },
    
 
     update: function(){
@@ -78,24 +78,25 @@ var wfconfig = {
     }
 
 };
+//TODO 3.2 Cargar Google font cuando la página esté cargada con wfconfig.
  window.onload = function(){
       WebFont.load(wfconfig);
       
     };
  
-//TODO 3.2 Cargar Google font cuando la página esté cargada con wfconfig.
+
 //TODO 3.3 La creación del juego y la asignación de los states se hará en el método init().
 
-window.onload = function () {
-  var game = new Phaser.Game(800, 600, Phaser.AUTO, 'game');0
+function init () {
+  var game = new Phaser.Game(800, 600, Phaser.AUTO, 'game');
 
 //TODO 1.2 Añadir los states 'boot' BootScene, 'menu' MenuScene, 'preloader' PreloaderScene, 'play' PlayScene, 'gameOver' GameOver.
 game.state.add('boot', BootScene);
-game.state.add('menu', MenuScene);
+game.state.add('menu', menuScene);
 game.state.add('preloader', PreloaderScene);
-game.state.add('play', PlayScene);
-game.state.add('gameOver', GameOver);
+game.state.add('play', playScene);
+game.state.add('gameOver', gameOver);
 //TODO 1.3 iniciar el state 'boot'. 
-this.game.state.start('boot');
+game.state.start('boot');
     
 };
